@@ -17,7 +17,7 @@
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
         app:cardElevation="40dp"
-       >
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/title_activity_login"
+                android:text="@string/title_activity_register"
                 android:fontFamily="@font/executive"
                 android:id="@+id/loginText"
                 android:textSize="38sp"
@@ -50,6 +50,15 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:id="@+id/email"
+                android:fontFamily="@font/andbasr"
+                android:hint="Email"
+                android:padding="8dp"
+                android:layout_marginTop="40dp"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
                 android:id="@+id/password"
                 android:fontFamily="@font/andbasr"
                 android:drawablePadding="8dp"
@@ -62,7 +71,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
                 android:id="@+id/loginButton"
-                android:text="Login"
+                android:text="Register"
                 android:textSize="18sp"
                 android:layout_marginTop="30dp"
                 android:backgroundTint="@color/blue"
@@ -72,9 +81,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:text="@string/action_sign_in"
+                android:text="@string/action_sign_register"
                 android:textSize="16sp"
-                android:id="@+id/signupText"
+                android:id="@+id/sigRegisterText"
                 android:textColor="@color/blue"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"/>

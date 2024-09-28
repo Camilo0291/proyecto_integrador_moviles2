@@ -7,33 +7,42 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
-public class login extends AppCompatActivity {
+
+
+
+public class activity_register extends AppCompatActivity {
 
     EditText username, password;
-    TextView signupText;
+    TextView sigRegisterText;
     Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_register);
 
         // Inicializar los campos y botones
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        signupText = findViewById(R.id.signupText);
+        sigRegisterText = findViewById(R.id.sigRegisterText);
         loginButton = findViewById(R.id.loginButton);
 
-        // Configurar el listener para el texto "Registrarse"
-        signupText.setOnClickListener(new View.OnClickListener() {
+
+        sigRegisterText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Crear un Intent para ir a la actividad RegisterActivity
-                Intent intent = new Intent(login.this, activity_register.class);  // Corregido a login.this
-                startActivity(intent);  // Iniciar la nueva actividad
+                Intent intent = new Intent(activity_register.this, login.class);
+                startActivity(intent);
             }
         });
+
+
     }
 }
