@@ -6,43 +6,49 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
+public class activity_register extends AppCompatActivity {  // Cambié el nombre de la clase
 
-
-
-public class activity_register extends AppCompatActivity {
-
-    EditText username, password;
+    clsDBSqlite db;  // Cambié a clsDBSqlite
+    EditText username, password, email;  // Agregué 'email' para que puedas registrar el correo
     TextView sigRegisterText;
-    Button loginButton;
+    Button registerButton;  // Corregí el nombre del botón
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register);  // Asegúrate de que el layout sea el correcto
 
-        // Inicializar los campos y botones
+        db = new clsDBSqlite(this);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
+        email = findViewById(R.id.email);  // Asegúrate de que tienes un EditText para email en el layout
         sigRegisterText = findViewById(R.id.sigRegisterText);
-        loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);  // Corregí el nombre del botón
 
+        registerButton.setOnClickListener(v -> {
+            String username = this.username.getText().toString();  // Corregí el método a getText()
+            String password = this.password.getText().toString();
+            String email = this.email.getText().toString();  // Obteniendo el email
 
-        sigRegisterText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(activity_register.this, login.class);
+            if (db.insertUser(username, email, password)) {  // Agregué el email al método
+                Toast.makeText(activity_register.this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity_register.this, talleres.class);
                 startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(activity_register.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
             }
         });
 
-
+        // Configurar el listener para el texto "Iniciar Sesión"
+          sigRegisterText.setOnClickListener(v -> {
+            // Crear un Intent para ir a la actividad de inicio de sesión
+            Intent intent = new Intent(activity_register.this, login.class);  // Asegúrate de que la clase sea la correcta
+            startActivity(intent);
+        });
     }
 }

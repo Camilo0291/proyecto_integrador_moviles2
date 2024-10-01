@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GatoPardoMoviles2">
         <activity
+            android:name=".talleres"
+            android:exported="false" />
+        <activity
             android:name=".activity_register"
             android:exported="false" />
         <activity
