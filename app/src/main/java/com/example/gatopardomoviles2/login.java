@@ -2,7 +2,6 @@ package com.example.gatopardomoviles2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -10,11 +9,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class login extends AppCompatActivity {  // Cambié el nombre de la clase a Login
-
-    clsDBSqlite db;  // Cambié a clsDBSqlite
+public class login extends AppCompatActivity {
+    clsDBSqlite db;
     EditText username, password;
-    TextView signupText;
+    TextView signupText1;
     Button loginButton;
 
     @Override
@@ -25,28 +23,32 @@ public class login extends AppCompatActivity {  // Cambié el nombre de la clase
         db = new clsDBSqlite(this);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        signupText = findViewById(R.id.signupText);
+        signupText1 = findViewById(R.id.signupText1);
         loginButton = findViewById(R.id.loginButton);
 
         loginButton.setOnClickListener(v -> {
-            String username = this.username.getText().toString();  // Usar 'this.username'
-            String password = this.password.getText().toString();  // Cambié a 'this.password'
+            String usernameText = username.getText().toString().trim();
+            String passwordText = password.getText().toString().trim();
 
-            if (db.checkUser(username, password)) {
-                Toast.makeText(login.this, "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
-                // Redirigir a la pantalla principal (agrega la lógica para redirigir)
-                Intent intent = new Intent(login.this, talleres.class);
+            // Verificar que los campos no estén vacíos
+            if (usernameText.isEmpty() || passwordText.isEmpty()) {
+                Toast.makeText(login.this, "Por favor, complete todos los campos.", Toast.LENGTH_SHORT).show();
+                return; // No continuar si hay campos vacíos
+            }
+
+            // Validación de credenciales
+            if (db.checkUser(usernameText, passwordText)) {
+                Toast.makeText(login.this, "¡Inicio de sesión exitoso!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(login.this, activity_panel.class);
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(login.this, "Credenciales incorrectas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(login.this, "¡Credenciales incorrectas!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Configurar el listener para el texto "Registrarse"
-        signupText.setOnClickListener(v -> {
-            // Crear un Intent para ir a la actividad RegisterActivity
-            Intent intent = new Intent(login.this, activity_register.class);  // Cambié a ActivityRegister
+        signupText1.setOnClickListener(v -> {
+            Intent intent = new Intent(login.this, activity_register.class);
             startActivity(intent);
         });
     }

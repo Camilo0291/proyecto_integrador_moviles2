@@ -30,11 +30,11 @@ public class clsDBSqlite extends SQLiteOpenHelper {
     }
 
     // Método para registrar un usuario
-    public boolean insertUser(String username, String email, String password) {  // Agregamos el parámetro 'email'
+    public boolean insertUser(String username, String email, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_1, username);
-        contentValues.put(COL_2, email);  // Corregimos esta línea
+        contentValues.put(COL_2, email);
         contentValues.put(COL_3, password);
         long result = db.insert(TABLE_NAME, null, contentValues);
         return result != -1; // Si el resultado no es -1, la inserción fue exitosa

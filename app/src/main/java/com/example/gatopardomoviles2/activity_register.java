@@ -2,7 +2,6 @@ package com.example.gatopardomoviles2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -10,44 +9,54 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class activity_register extends AppCompatActivity {  // Cambié el nombre de la clase
+public class activity_register extends AppCompatActivity {
 
-    clsDBSqlite db;  // Cambié a clsDBSqlite
-    EditText username, password, email;  // Agregué 'email' para que puedas registrar el correo
+    clsDBSqlite db;
+    EditText username, password, email;
     TextView sigRegisterText;
-    Button registerButton;  // Corregí el nombre del botón
+    Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);  // Asegúrate de que el layout sea el correcto
+        setContentView(R.layout.activity_register);
 
+        // Inicializar la base de datos y las vistas
         db = new clsDBSqlite(this);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        email = findViewById(R.id.email);  // Asegúrate de que tienes un EditText para email en el layout
+        email = findViewById(R.id.email);
         sigRegisterText = findViewById(R.id.sigRegisterText);
-        registerButton = findViewById(R.id.registerButton);  // Corregí el nombre del botón
+        registerButton = findViewById(R.id.registerButton);
 
+        // Listener para el botón de registro
         registerButton.setOnClickListener(v -> {
-            String username = this.username.getText().toString();  // Corregí el método a getText()
-            String password = this.password.getText().toString();
-            String email = this.email.getText().toString();  // Obteniendo el email
+            String enteredUsername = username.getText().toString().trim();
+            String enteredPassword = password.getText().toString().trim();
+            String enteredEmail = email.getText().toString().trim();
 
-            if (db.insertUser(username, email, password)) {  // Agregué el email al método
-                Toast.makeText(activity_register.this, "Usuario registrado exitosamente", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(activity_register.this, talleres.class);
+
+
+            // Validar campos vacíos
+            if (enteredUsername.isEmpty() || enteredPassword.isEmpty() || enteredEmail.isEmpty()) {
+                Toast.makeText(activity_register.this, "¡Por favor, completa todos los campos!", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Intentar registrar al usuario en la base de datos
+            if (db.insertUser(enteredUsername, enteredEmail, enteredPassword)) {
+                Toast.makeText(activity_register.this, "¡Usuario registrado exitosamente!", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(activity_register.this, activity_panel.class);
                 startActivity(intent);
                 finish();
             } else {
-                Toast.makeText(activity_register.this, "Error al registrar usuario", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity_register.this, "¡Error al registrar usuario!", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Configurar el listener para el texto "Iniciar Sesión"
-          sigRegisterText.setOnClickListener(v -> {
-            // Crear un Intent para ir a la actividad de inicio de sesión
-            Intent intent = new Intent(activity_register.this, login.class);  // Asegúrate de que la clase sea la correcta
+        // Listener para el texto de "Iniciar Sesión"
+        sigRegisterText.setOnClickListener(v -> {
+            Intent intent = new Intent(activity_register.this, login.class);
             startActivity(intent);
         });
     }
