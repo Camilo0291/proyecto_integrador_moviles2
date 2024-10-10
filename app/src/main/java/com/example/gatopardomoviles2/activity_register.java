@@ -35,8 +35,6 @@ public class activity_register extends AppCompatActivity {
             String enteredPassword = password.getText().toString().trim();
             String enteredEmail = email.getText().toString().trim();
 
-
-
             // Validar campos vacíos
             if (enteredUsername.isEmpty() || enteredPassword.isEmpty() || enteredEmail.isEmpty()) {
                 Toast.makeText(activity_register.this, "¡Por favor, completa todos los campos!", Toast.LENGTH_SHORT).show();

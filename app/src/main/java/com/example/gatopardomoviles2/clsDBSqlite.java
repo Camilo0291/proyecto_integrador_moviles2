@@ -41,7 +41,7 @@ public class clsDBSqlite extends SQLiteOpenHelper {
     }
 
     // Método para verificar las credenciales del usuario
-    public boolean checkUser(String username, String password) {  // Solo necesitamos username y password
+    public boolean checkUser(String username, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE USERNAME = ? AND PASSWORD = ?",
                 new String[]{username, password});  // Eliminamos 'email' de la consulta

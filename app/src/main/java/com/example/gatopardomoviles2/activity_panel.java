@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,7 +17,7 @@ public class activity_panel extends AppCompatActivity {
     EditText username1, email, password;
     ImageView searchButton;
     Button registerButtonPanel;
-    boolean isUserFound = false;  // Bandera para saber si el usuario fue encontrado
+    boolean isUserFound = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +41,13 @@ public class activity_panel extends AppCompatActivity {
             }
 
             // Buscar el usuario en la base de datos
-            clsDBSqlite dbHelper = new clsDBSqlite(this); // Inicializamos dbHelper
+            clsDBSqlite dbHelper = new clsDBSqlite(this);
             SQLiteDatabase db = dbHelper.getReadableDatabase();
 
             Cursor cursor = db.rawQuery("SELECT * FROM " + clsDBSqlite.TABLE_NAME + " WHERE USERNAME = ?", new String[]{enteredUsername});
 
             if (cursor.moveToFirst()) {
-                String dbUsername = cursor.getString(cursor.getColumnIndexOrThrow(clsDBSqlite.COL_1)); // Mejor usar getColumnIndexOrThrow
+                String dbUsername = cursor.getString(cursor.getColumnIndexOrThrow(clsDBSqlite.COL_1));
                 String dbEmail = cursor.getString(cursor.getColumnIndexOrThrow(clsDBSqlite.COL_2));
                 String dbPassword = cursor.getString(cursor.getColumnIndexOrThrow(clsDBSqlite.COL_3));
 
@@ -55,15 +56,15 @@ public class activity_panel extends AppCompatActivity {
                 password.setText(dbPassword);
 
                 Toast.makeText(activity_panel.this, "¡Datos encontrados!", Toast.LENGTH_SHORT).show();
-                isUserFound = true;  // Se ha encontrado el usuario
+                isUserFound = true;
             } else {
                 Toast.makeText(activity_panel.this, "¡Usuario no encontrado!", Toast.LENGTH_SHORT).show();
-                isUserFound = false;  // Usuario no encontrado
+                isUserFound = false;
             }
             cursor.close();
         });
 
-        // Configurar el listener para el botón de registro (Ir a talleres)
+        // Configurar el listener para el botón de registro para (Ir a talleres)
         registerButtonPanel.setOnClickListener(v -> {
             if (isUserFound) {
                 Intent intent = new Intent(activity_panel.this, talleres.class);
