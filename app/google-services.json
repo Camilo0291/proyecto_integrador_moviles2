@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "815660557644",
+    "project_id": "gatopardo-41438",
+    "storage_bucket": "gatopardo-41438.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:815660557644:android:aa42b7468767fdee4a9be9",
+        "android_client_info": {
+          "package_name": "com.example.gatopardomoviles2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWk0_OUH_-s_NyImx1soacY9Bclbc4YvU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

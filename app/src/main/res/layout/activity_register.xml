@@ -16,7 +16,8 @@
         android:layout_margin="30dp"
         app:cardCornerRadius="30dp"
         app:cardBackgroundColor="@color/green"
-        app:cardElevation="40dp">
+        app:cardElevation="40dp"
+        android:id="@+id/main">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -36,20 +37,11 @@
                 android:textStyle="bold"
                 android:textColor="@color/blue"/>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/username"
-                android:fontFamily="@font/executive"
-                android:hint="@string/user_register"
-                android:padding="8dp"
-                android:layout_marginTop="40dp"
-                android:backgroundTint="@android:color/black" />
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/email"
+                android:id="@+id/etEmailR"
                 android:fontFamily="@font/executive"
                 android:hint="@string/email_register"
                 android:padding="8dp"
@@ -60,7 +52,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/password"
+                android:id="@+id/etPasswordR"
                 android:fontFamily="@font/executive"
                 android:drawablePadding="8dp"
                 android:hint="@string/password_register"

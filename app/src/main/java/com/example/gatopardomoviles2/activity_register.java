@@ -2,60 +2,89 @@ package com.example.gatopardomoviles2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.regex.Pattern;
 
 public class activity_register extends AppCompatActivity {
 
-    clsDBSqlite db;
-    EditText username, password, email;
-    TextView sigRegisterText;
-    Button registerButton;
+    // Definimos las vistas
+    EditText email, password;
+    TextView sig;
+    Button register;
+    FirebaseAuth mAut = FirebaseAuth.getInstance();
+
+    // Expresión regular para verificar que el correo tiene un dominio permitido (gmail.com, hotmail.com, yahoo.com)
+    private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9._%+-]+@(gmail\\.com|hotmail\\.com|yahoo\\.com)$");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        // Inicializar la base de datos y las vistas
-        db = new clsDBSqlite(this);
-        username = findViewById(R.id.username);
-        password = findViewById(R.id.password);
-        email = findViewById(R.id.email);
-        sigRegisterText = findViewById(R.id.sigRegisterText);
-        registerButton = findViewById(R.id.registerButton);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
 
-        // Listener para el botón de registro
-        registerButton.setOnClickListener(v -> {
-            String enteredUsername = username.getText().toString().trim();
-            String enteredPassword = password.getText().toString().trim();
-            String enteredEmail = email.getText().toString().trim();
+        // Conectamos las vistas con los componentes del layout
+        email = findViewById(R.id.etEmailR);
+        password = findViewById(R.id.etPasswordR);
+        sig = findViewById(R.id.sigRegisterText);
+        register = findViewById(R.id.registerButton);
 
-            // Validar campos vacíos
-            if (enteredUsername.isEmpty() || enteredPassword.isEmpty() || enteredEmail.isEmpty()) {
-                Toast.makeText(activity_register.this, "¡Por favor, completa todos los campos!", Toast.LENGTH_SHORT).show();
-                return;
-            }
+        // Configuración del botón de registro
+        register.setOnClickListener(view -> {
+            String mEmail = email.getText().toString();
+            String mPassword = password.getText().toString();
 
-            // Intentar registrar al usuario en la base de datos
-            if (db.insertUser(enteredUsername, enteredEmail, enteredPassword)) {
-                Toast.makeText(activity_register.this, "¡Usuario registrado exitosamente!", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(activity_register.this, activity_panel.class);
-                startActivity(intent);
-                finish();
+            // Verificación de que los campos no estén vacíos
+            if (!mEmail.isEmpty() && !mPassword.isEmpty()) {
+                // Verificamos que el correo tenga un dominio permitido
+                if (isValidEmailDomain(mEmail)) {
+                    // Intentamos registrar al usuario con Firebase Authentication
+                    mAut.createUserWithEmailAndPassword(mEmail, mPassword)
+                            .addOnCompleteListener(task -> {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(activity_register.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                    startActivity(new Intent(getApplicationContext(), talleres.class));
+                                } else {
+
+                                    Toast.makeText(activity_register.this, "Error en el registro", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                } else {
+                    Toast.makeText(activity_register.this, "El correo debe ser de un dominio válido", Toast.LENGTH_SHORT).show();
+                }
             } else {
-                Toast.makeText(activity_register.this, "¡Error al registrar usuario!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity_register.this, "Por favor, complete los campos", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Listener para el texto de "Iniciar Sesión"
-        sigRegisterText.setOnClickListener(v -> {
+        // Listener para el texto de "Iniciar sesión"
+        sig.setOnClickListener(v -> {
             Intent intent = new Intent(activity_register.this, login.class);
             startActivity(intent);
         });
+    }
+
+    // Método para validar si el correo tiene un dominio permitido según la expresión regular
+    private boolean isValidEmailDomain(String email) {
+        return EMAIL_PATTERN.matcher(email).matches();
     }
 }
