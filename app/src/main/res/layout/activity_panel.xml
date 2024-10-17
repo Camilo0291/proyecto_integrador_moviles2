@@ -11,7 +11,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
+        android:layout_margin="50dp"
         app:cardCornerRadius="30dp"
         app:cardBackgroundColor="@color/green"
         app:cardElevation="40dp">
@@ -42,21 +42,12 @@
                 android:layout_marginTop="20dp"
                 android:layout_gravity="center" />
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:id="@+id/username1"
-                android:fontFamily="@font/executive"
-                android:hint="@string/user_panel"
-                android:padding="8dp"
-                android:textSize="20dp"
-                android:layout_marginTop="40dp"
-                android:backgroundTint="@android:color/black" />
+
 
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/email"
+                android:id="@+id/etEmailP"
                 android:fontFamily="@font/executive"
                 android:hint="@string/email_panel"
                 android:textSize="20dp"
@@ -67,7 +58,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:id="@+id/password"
+                android:id="@+id/etPasswordP"
                 android:fontFamily="@font/executive"
                 android:hint="@string/password_panel"
                 android:padding="8dp"
@@ -85,16 +76,16 @@
 
                 <Button
                     android:id="@+id/registerButttonpanel"
-                    android:layout_width="200dp"
+                    android:layout_width="190dp"
                     android:layout_height="60dp"
+                    android:layout_marginEnd="8dp"
                     android:backgroundTint="@color/white"
                     android:fontFamily="@font/andbasr"
                     android:text="@string/button_panel"
-                    android:textColor="@color/blue"
                     android:textAlignment="center"
+                    android:textColor="@color/blue"
                     android:textSize="18sp"
                     android:textStyle="bold"
-                    android:layout_marginEnd="8dp"
                     app:cornerRadius="8dp" />
 
                 <ImageButton

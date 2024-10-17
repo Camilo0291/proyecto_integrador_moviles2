@@ -76,7 +76,7 @@ public class activity_register extends AppCompatActivity {
             }
         });
 
-        // Listener para el texto de "Iniciar sesión"
+        // Listener ir a "Iniciar sesión"
         sig.setOnClickListener(v -> {
             Intent intent = new Intent(activity_register.this, login.class);
             startActivity(intent);
